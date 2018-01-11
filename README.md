@@ -16,28 +16,36 @@ You will need [Maven](http://maven.apache.org/) for building Goclipse.
  * To just build without running tests, invoke `mvn clean package`.
 
 ### Setting up a development environment:
- * You need [Eclipse PDE](https://eclipse.org/pde/) to develop Eclipse plugins. Download and start it.
+
+#### Download Eclipse PDE
+
+ * You need [Eclipse PDE](https://eclipse.org/pde/) to develop Eclipse plugins.
+ * Download and start it. Tested with Eclipse Oxygen.2 Release (4.7.2)
  * Clone the Git repository.
  * In Eclipse, click "File / Import... ", and then "General / Existing projects into workspace". Select the Git repository folder as the "root directory", enable "Search for nested projects", and select all the Eclipse projects that show up. Click finish to import those projects.
 <div align="center">
 <a><img src="documentation/README_images/ImportPluginProjects.png" /><a/> <br/>
 </div>
-   * Note: The actual project names will be different from those in the screenshot above.
-   * Note: Java compiler settings will be automatically configured, since Eclipse compiler settings are stored in source version control.
- * Setup the target platform. Unfortunately due to limitations in Tycho/PDE tooling ([more info](https://github.com/tesla/m2eclipse-tycho/issues/29)) some manual steps are required:
-   1. Open a shell on `target-platform/` and run `mvn package`. This should create a `deps-repository/repository` directory.
-   1. Copy the target platform file: `target-platform/IDE-base.target` to `target-platform/IDE-gen.target`. (this last filename is already git-ignored).
-   1. Open `target-platform/IDE-gen.target` in Eclipse, so that it opens under the PDE editor. 
-   1. Click "Add", then select "Software Site". 
-   1. On the "Add Software Site" dialog, click "Add...", then "Local...", navigate to Git repo directory, then choose the `target-platform/deps-repository/repository` directory.
-   1. On the "Add Software Site" dialog, the new repository should be selected. Click "Select All" to select all deps, then click "Finish". It should look more or less like this:
+ * Note: The actual project names will be different from those in the screenshot above.
+ * Note: Java compiler settings will be automatically configured, since Eclipse compiler settings are stored in source version control.
+
+#### Setup the goclipse plug-in target platform on Eclipse
+
+Unfortunately due to limitations in Tycho/PDE tooling ([more info](https://github.com/tesla/m2eclipse-tycho/issues/29)) some manual steps are required:
+
+ 1. Open a shell on `target-platform/` and run `mvn package`. This should create a `deps-repository/repository` directory.
+ 1. Copy the target platform file: `target-platform/IDE-base.target` to `target-platform/IDE-gen.target`. (this last filename is already git-ignored).
+ 1. Open `target-platform/IDE-gen.target` in Eclipse, so that it opens under the PDE editor.
+ 1. Click "Add", then select "Software Site".
+ 1. On the "Add Software Site" dialog, click "Add...", then "Local...", navigate to Git repo directory, then choose the `target-platform/deps-repository/repository` directory.
+ 1. On the "Add Software Site" dialog, the new repository should be selected. Click "Select All" to select all deps, then click "Finish". It should look more or less like this:
 <div align="center">
-<a><img src="documentation/README_images/Set_As_Target_Platform.png" /><a/> 
+<a><img src="documentation/README_images/Set_As_Target_Platform.png" /><a/>
 </div>
    1. Then finally click "Set as Target Platform".
  * Build the workspace ( "Project / Build All"). Everything should build fine now, there should be no errors.
  * To start the IDE from your workspace: Open "Run / Run Configurations ...". Click on "Eclipse Application" to create a new launch for the plugins in your workspace. The default new configuration that is created should already be ready to be launched.
- * **Additional tip:** Locate the `bin-maven` folder in the top-level project, open its Properties from the Project Explorer context menu, and mark that directory as "Derived" in the "Resources" property page. This will prevent those folder resources to appear in UI operations such as "Open Resource" for example. 
+ * **Additional tip:** Locate the `bin-maven` folder in the top-level project, open its Properties from the Project Explorer context menu, and mark that directory as "Derived" in the "Resources" property page. This will prevent those folder resources to appear in UI operations such as "Open Resource" for example.
 
 #### Running the tests in Eclipse:
  * In `releng/launches` there is one or several Eclipse launch files for running the tests, so if this project is added to your Eclipse workspace, the launches will show up automatically in `Run Configurations...`, as "JUnit Plug-in Tests". 
