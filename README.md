@@ -39,13 +39,16 @@ Unfortunately due to limitations in Tycho/PDE tooling ([more info](https://githu
  1. Click "Add", then select "Software Site".
  1. On the "Add Software Site" dialog, click "Add...", then "Local...", navigate to Git repo directory, then choose the `target-platform/deps-repository/repository` directory.
  1. On the "Add Software Site" dialog, the new repository should be selected. Click "Select All" to select all deps, then click "Finish". It should look more or less like this:
+ 1. Then finally click "Set as Target Platform".
+
 <div align="center">
 <a><img src="documentation/README_images/Set_As_Target_Platform.png" /><a/>
 </div>
-   1. Then finally click "Set as Target Platform".
- * Build the workspace ( "Project / Build All"). Everything should build fine now, there should be no errors.
- * To start the IDE from your workspace: Open "Run / Run Configurations ...". Click on "Eclipse Application" to create a new launch for the plugins in your workspace. The default new configuration that is created should already be ready to be launched.
- * **Additional tip:** Locate the `bin-maven` folder in the top-level project, open its Properties from the Project Explorer context menu, and mark that directory as "Derived" in the "Resources" property page. This will prevent those folder resources to appear in UI operations such as "Open Resource" for example.
+
+#### Running the goclipse plug-in in Eclipse:
+  * Build the workspace ( "Project / Build All"). Everything should build fine now, there should be no errors.
+  * To start the IDE from your workspace: Open "Run / Run Configurations ...". Click on "Eclipse Application" to create a new launch for the plugins in your workspace. The default new configuration that is created should already be ready to be launched.
+  * Additional tip: Locate the `bin-maven` folder in the top-level project, open its Properties from the Project Explorer context menu, and mark that directory as "Derived" in the "Resources" property page. This will prevent those folder resources to appear in UI operations such as "Open Resource" for example.
 
 #### Running the tests in Eclipse:
  * In `releng/launches` there is one or several Eclipse launch files for running the tests, so if this project is added to your Eclipse workspace, the launches will show up automatically in `Run Configurations...`, as "JUnit Plug-in Tests". 
