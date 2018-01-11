@@ -44,6 +44,8 @@ Unfortunately due to limitations in Tycho/PDE tooling ([more info](https://githu
 <div align="center">
 <a><img src="documentation/README_images/Set_As_Target_Platform.png" /><a/>
 </div>
+
+#### Running the goclipse plug-in in Eclipse:
   * Build the workspace ( "Project / Build All"). Everything should build fine now, there should be no errors.
   * To start the IDE from your workspace: Open "Run / Run Configurations ...". Click on "Eclipse Application" to create a new launch for the plugins in your workspace. The default new configuration that is created should already be ready to be launched.
   * Additional tip: Locate the `bin-maven` folder in the top-level project, open its Properties from the Project Explorer context menu, and mark that directory as "Derived" in the "Resources" property page. This will prevent those folder resources to appear in UI operations such as "Open Resource" for example.
