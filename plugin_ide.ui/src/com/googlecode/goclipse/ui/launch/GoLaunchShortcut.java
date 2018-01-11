@@ -55,7 +55,7 @@ public class GoLaunchShortcut extends LangLaunchShortcut implements ILaunchShort
 		}
 		
 		if(resource instanceof IFile) {
-			return getLaunchableForGoPackage(resource.getParent());
+			return getLaunchableForGoPackage(resource);
 		} else if(resource instanceof IFolder) { 
 			return getLaunchableForGoPackage(resource);
 		}

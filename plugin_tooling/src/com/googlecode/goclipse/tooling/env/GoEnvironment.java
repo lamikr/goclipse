@@ -29,42 +29,44 @@ import melnorme.utilbox.misc.Location;
  * (similar to a build path)
  */
 public class GoEnvironment {
-	
+
 	protected final GoRoot goRoot;
 	protected final GoPath goPath;
-	
-	public GoEnvironment(GoRoot goRoot, GoPath goPath) {
+	protected final Location goBin;
+
+	public GoEnvironment(GoRoot goRoot, GoPath goPath, Location goProjectBinLocation) {
 		this.goRoot = assertNotNull(goRoot);
 		this.goPath = assertNotNull(goPath);
+		this.goBin = goProjectBinLocation;
 	}
-	
-	public GoEnvironment(GoRoot goRoot, String goPath) {
-		this(goRoot, new GoPath(goPath));
+
+	public GoEnvironment(GoRoot goRoot, String goPath, String goProjectBinLocation) {
+		this(goRoot, new GoPath(goPath), Location.createValidOrNull(goProjectBinLocation));
 	}
-	
+
 	public GoRoot getGoRoot() {
 		return goRoot;
 	}
-	
+
 	public Location getGoRoot_Location() throws CommonException {
 		return goRoot.asLocation();
 	}
-	
+
 	public GoPath getGoPath() {
 		return goPath;
 	}
-	
+
 	public Indexable<String> getGoPathEntries() {
 		return goPath.getGoPathEntries();
 	}
-	
+
 	public String getGoPathString() {
 		return goPath.getGoPathString();
 	}
-	
-	
+
+
 	/* ----------------- validation: ----------------- */
-	
+
 	public void validate() throws CommonException {
 		goRoot.validate();
 		goPath.validate();
@@ -110,16 +112,16 @@ public class GoEnvironment {
 		}
 		return goWorkspace.getBinLocation();
 	}
-	
-	
+
+
 	/* -----------------  process builder  ----------------- */
-	
-	public ProcessBuilder createProcessBuilder(Indexable<String> commandLine, Location workingDir) 
+
+	public ProcessBuilder createProcessBuilder(Indexable<String> commandLine, Location workingDir)
 			throws CommonException {
 		return createProcessBuilder(commandLine, workingDir, true);
 	}
-	
-	public ProcessBuilder createProcessBuilder(Indexable<String> commandLine, Location workingDir, boolean goRootInPath) 
+
+	public ProcessBuilder createProcessBuilder(Indexable<String> commandLine, Location workingDir, boolean goRootInPath)
 			throws CommonException {
 		ProcessBuilder pb = ProcessUtils.createProcessBuilder(commandLine, workingDir);
 		setupProcessEnv(pb, goRootInPath);
@@ -128,22 +130,26 @@ public class GoEnvironment {
 
 	public void setupProcessEnv(ProcessBuilder pb, boolean goRootInPath) throws CommonException {
 		Map<String, String> env = pb.environment();
-		
+
 		// GOROOT needs to be set for custom locations, see https://golang.org/doc/install#install
 		putMapEntry(env, GoEnvironmentConstants.GOROOT, goRoot.asString());
-		
+
 		putMapEntry(env, GoEnvironmentConstants.GOPATH, getGoPathString());
-		
+
+		if (goBin != null) {
+			String str = goBin.toPathString();
+			putMapEntry(env, GoEnvironmentConstants.GOBIN, str);
+		}
 		if(goRootInPath) {
 			// Add GoRoot to path. See #113 for rationale
 			EnvUtils.addLocationToPathEnv(getGoRoot_Location(), pb);
 		}
 	}
-	
+
 	protected void putMapEntry(Map<String, String> env, String key, String value) {
 		if(value != null) {
 			env.put(key, value);
 		}
 	}
-	
+
 }

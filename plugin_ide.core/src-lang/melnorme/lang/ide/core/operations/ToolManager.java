@@ -228,7 +228,7 @@ public abstract class ToolManager extends EventSource<ILangOperationsListener>
 	) {
 		String prefixText;
 		if(buildTargetName != null) {
-			prefixText = MessageFormat.format(">> Running `{0}` with: ", buildTargetName);
+			prefixText = MessageFormat.format(">> Target: `{0}`, command:\n", buildTargetName);
 		} else {
 			prefixText = ">> Running: ";	
 		}

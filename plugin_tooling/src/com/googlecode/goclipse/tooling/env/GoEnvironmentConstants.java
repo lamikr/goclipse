@@ -11,10 +11,11 @@
 package com.googlecode.goclipse.tooling.env;
 
 public interface GoEnvironmentConstants {
-	
+
 	public static final String GOROOT = "GOROOT";
 	public static final String GOARCH = "GOARCH";
 	public static final String GOOS   = "GOOS";
 	public static final String GOPATH = "GOPATH";
-	
+	public static final String GOBIN  = "GOBIN";
+
 }

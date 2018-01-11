@@ -23,27 +23,28 @@ import melnorme.utilbox.misc.MiscUtil;
 import melnorme.utilbox.tests.TestsWorkingDir;
 
 public class CommonGoToolingTest extends CommonToolingTest {
-	
+
 	public static final Location TESTS_WORKDIR = TestsWorkingDir.getWorkingDir();
-	
+
 	public static final Location MOCK_GOROOT = ToolingTests_Actual.SAMPLE_SDK_PATH;
 	public static final GoRoot SAMPLE_GO_ROOT = new GoRoot(MOCK_GOROOT.toString());
-	
+
 	public static final Location SAMPLE_GOPATH_Entry = TESTS_WORKDIR.resolve_valid("goPathEntry");
 	public static final GoPath SAMPLE_GO_PATH = new GoPath(SAMPLE_GOPATH_Entry.toString());
-	
+
 	protected static final GoEnvironment SAMPLE_GOEnv_1 = new GoEnvironment(
-		SAMPLE_GO_ROOT, 
-		SAMPLE_GO_PATH
+		SAMPLE_GO_ROOT,
+		SAMPLE_GO_PATH,
+		null
 	);
-	
+
 	public static final Location TR_SAMPLE_GOPATH_ENTRY = getTestResourceLoc("sampleGoPathEntry");
-	
+
 	public static String fixTestsPaths(String originalSource) {
 		if(!MiscUtil.OS_IS_WINDOWS) {
 			return originalSource.replaceAll("D:/devel/tools", "/devel/tools");
 		}
 		return originalSource;
 	}
-	
+
 }

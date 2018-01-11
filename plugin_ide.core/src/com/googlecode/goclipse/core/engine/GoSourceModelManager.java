@@ -141,7 +141,7 @@ public class GoSourceModelManager extends SourceModelManager {
 			FileUtil.writeStringToFile(describeFile.toFile(), source, StringUtil.UTF8);
 			
 			// Modify goEnv for tempDir
-			goEnv = new GoEnvironment(goEnv.getGoRoot(), new GoPath(tempDir.toString()));
+			goEnv = new GoEnvironment(goEnv.getGoRoot(), new GoPath(tempDir.toString()), null);
 		}
 		
 		protected ExternalProcessResult runGuru(GoEnvironment goEnv, Location opTempFile)

@@ -175,7 +175,11 @@ public class GoBuildManager extends BuildManager {
 			
 			Location binFolderLocation = GoProjectEnvironment.getBinFolderLocation(bt.getProject());
 			
+			int indx;
 			String binFilePath = getBinFilePath(getValidGoPackageName(bt.getBuildConfigName()));
+			indx = binFilePath.lastIndexOf(".go");
+			if (indx > 0)
+				binFilePath = binFilePath.substring(0, indx);
 			String exePath = binFolderLocation.resolve(binFilePath + MiscUtil.getExecutableSuffix()).toString();
 			return new LaunchArtifact(bt.getBuildConfigName(), exePath);
 		}
