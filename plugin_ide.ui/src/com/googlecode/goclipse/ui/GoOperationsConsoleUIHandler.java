@@ -40,21 +40,41 @@ public class GoOperationsConsoleUIHandler extends LangOperationsConsoleUIHandler
 		monitor.errorOnNonZeroExitValueForBuild = true;
 		return monitor;
 	}
-	
+
+	private String getEnvVarAsText(ProcessBuilder pb, String keyEnvVar) {
+		String ret = EnvUtils.getVarFromEnvMap(pb.environment(), keyEnvVar);
+
+		if ((ret != null) && (ret.length() > 0)) {
+			ret = keyEnvVar + "=" + ret;
+		}
+		else {
+			ret = "";
+		}
+		return ret;
+	}
+
+	private String getEnvVarAsFormattedText(ProcessBuilder pb, String keyEnvVar) {
+		String ret;
+
+		ret = getEnvVarAsText(pb, keyEnvVar);
+		if ((ret != null) && (ret.length() > 0)) {
+			ret = "    " + ret + "\n";
+		}
+		return ret;
+	}
+
 	@Override
 	protected String getPrefaceText(String prefixText, String suffixText, ProcessBuilder pb) {
-		String prefaceText = super.getPrefaceText(prefixText, suffixText, pb);
-		String goRoot= EnvUtils.getVarFromEnvMap(pb.environment(), GoEnvironmentConstants.GOROOT);
-		if (goRoot != null) {
-			prefaceText += "   with GOROOT: " + goRoot + "\n";
-		}
-		String goPath = EnvUtils.getVarFromEnvMap(pb.environment(), GoEnvironmentConstants.GOPATH);
-		if (goPath != null) {
-			prefaceText += "   with GOPATH: " + goPath + "\n";
-		}
-		return prefaceText;
+		String ret;
+
+		ret = super.getPrefaceText(prefixText, suffixText, pb);
+		ret = ret + getEnvVarAsFormattedText(pb, GoEnvironmentConstants.GOROOT);
+		ret = ret + getEnvVarAsFormattedText(pb, GoEnvironmentConstants.GOPATH);
+		ret = ret + getEnvVarAsFormattedText(pb, GoEnvironmentConstants.GOBIN);
+
+		return ret;
 	}
-	
+
 	@Override
 	protected String getProcessTerminatedMessage(int exitCode) {
 		return " " + super.getProcessTerminatedMessage(exitCode);
